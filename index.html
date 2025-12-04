@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sữa mẹ là chân ái – Đồng hành cùng Taxi điện Nam Thắng</title>
+  <style>
+    :root {
+      --pink-lotus: #f472b6;  /* hồng cánh sen */
+      --pink-deep: #ec4899;
+      --lime-nt: #a3e635;     /* xanh nõn chuối Nam Thắng */
+      --text-main: #1f2933;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: linear-gradient(135deg, #fdf2f8, #fee2e2);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      color: var(--text-main);
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 20px 20px;
+      box-shadow: 0 14px 40px rgba(236, 72, 153, 0.25);
+      border: 1px solid rgba(236, 72, 153, 0.2);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .logo-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .logo-wrapper img {
+      max-width: 180px;
+      height: auto;
+    }
+
+    .title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--pink-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      font-size: 0.85rem;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    form {
+      margin-top: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    input[type="tel"] {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input[type="tel"]:focus {
+      border-color: var(--pink-deep);
+      box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.25);
+    }
+
+    button[type="submit"] {
+      border: none;
+      border-radius: 999px;
+      padding: 0 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-lotus));
+      color: #fff;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+      box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(236, 72, 153, 0.5);
+    }
+
+    button[type="submit"]:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 14px rgba(236, 72, 153, 0.35);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.7;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .small-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    .error-text {
+      font-size: 0.8rem;
+      color: #dc2626;
+      margin-top: 6px;
+      min-height: 1em;
+    }
+
+    .hotline {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: #4b5563;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px dashed rgba(163, 230, 53, 0.7);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hotline strong {
+      color: var(--pink-deep);
+    }
+
+    .hotline a {
+      color: var(--lime-nt);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      font-size: 0.7rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    /* Modal popup */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal {
+      background: #ffffff;
+      border-radius: 18px;
+      max-width: 420px;
+      width: 100%;
+      padding: 20px 18px 18px;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
+      position: relative;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--pink-deep);
+      margin-bottom: 8px;
+    }
+
+    .modal-text {
+      font-size: 0.9rem;
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #0f172a;
+      background: var(--lime-nt);
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      animation: pulse 1.3s infinite;
+    }
+
+    .download-btn span {
+      margin-left: 4px;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.7);
+      }
+      70% {
+        transform: scale(1.03);
+        box-shadow: 0 0 0 14px rgba(163, 230, 53, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(163, 230, 53, 0);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      border: none;
+      background: transparent;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: #9ca3af;
+    }
+
+    .modal-hotline {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .modal-hotline a {
+      color: var(--pink-deep);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 360px) {
+      .card {
+        padding: 20px 16px 16px;
+      }
+      .input-group {
+        flex-direction: column;
+      }
+      button[type="submit"] {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <header class="header">
+        <div class="logo-wrapper">
+          <!-- Thay src bằng logo thật của bạn -->
+          <img src="logo-namthang-phuongchau.png"
+               alt="Taxi điện Nam Thắng x Bệnh viện Phương Châu" />
+        </div>
+        <div class="title">Sữa mẹ là chân ái</div>
+        <div class="subtitle">Đồng hành cùng Taxi điện Nam Thắng</div>
+        <p class="description">
+          Đăng ký số điện thoại để nhận
+          <strong>mã giảm 15%</strong> trên tổng cuốc xe,<br />
+          áp dụng cho cuốc xe biết trước giá và cuốc xe hợp đồng 1 chiều
+          trên App Nam Thắng.
+        </p>
+      </header>
+
+      <form id="registerForm" autocomplete="off" novalidate>
+        <label for="phone">Số điện thoại mẹ bầu (10 số)</label>
+        <div class="input-group">
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Ví dụ: 0938123456"
+            inputmode="numeric"
+            maxlength="10"
+            required
+          />
+          <button type="submit" id="submitBtn">
+            Đăng ký ngay
+          </button>
+        </div>
+        <div class="small-hint">
+          Chỉ cần nhập số điện thoại, không cần thông tin khác.
+        </div>
+        <div id="errorText" class="error-text"></div>
+      </form>
+
+      <div class="hotline">
+        <div>Hỗ trợ đặt xe trên App Nam Thắng</div>
+        <div>
+          <strong>Hotline:</strong>
+          <a href="tel:0949691414">0949.69.14.14</a>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        Thông tin chỉ dùng để gửi mã giảm giá Taxi điện Nam Thắng cho chương trình
+        “Sữa mẹ là chân ái”.
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal cảm ơn -->
+  <div id="successModal" class="modal-backdrop">
+    <div class="modal">
+      <button class="modal-close" type="button" aria-label="Đóng" id="closeModalBtn">
+        ×
+      </button>
+      <div class="modal-title">Cảm ơn mẹ bầu đã đăng ký 💖</div>
+      <div class="modal-text">
+        Mã giảm giá Taxi điện Nam Thắng sẽ có hiệu lực trong vòng
+        <strong>30 phút</strong>.<br />
+        Mẹ bầu hãy tải App và kiểm tra <strong>giỏ voucher</strong> nhé.
+      </div>
+      <a
+        href="https://taxinamthang.vn/taiapp"
+        target="_blank"
+        rel="noopener"
+        class="download-btn"
+      >
+        🚕 <span>Bấm vào đây để tải App</span>
+      </a>
+      <div class="modal-hotline">
+        Cần hỗ trợ? Gọi ngay
+        <a href="tel:0949691414">0949.69.14.14</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'PASTE_APPS_SCRIPT_URL_HERE'; // ← dán URL Web App Apps Script vào đây
+
+    const form = document.getElementById('registerForm');
+    const phoneInput = document.getElementById('phone');
+    const errorText = document.getElementById('errorText');
+    const submitBtn = document.getElementById('submitBtn');
+    const successModal = document.getElementById('successModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function isValidVNPhone(phone) {
+      // chỉ cho 10 ký tự số và bắt đầu bằng 0
+      return /^0\d{9}$/.test(phone);
+    }
+
+    function showError(msg) {
+      errorText.textContent = msg || '';
+    }
+
+    function openModal() {
+      successModal.classList.add('show');
+    }
+
+    function closeModal() {
+      successModal.classList.remove('show');
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+    successModal.addEventListener('click', function (e) {
+      if (e.target === successModal) {
+        closeModal();
+      }
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      showError('');
+
+      var rawPhone = phoneInput.value || '';
+      var phone = rawPhone.replace(/\D/g, ''); // loại bỏ ký tự không phải số
+
+      if (!phone) {
+        showError('Vui lòng nhập số điện thoại.');
+        return;
+      }
+
+      if (!isValidVNPhone(phone)) {
+        showError('Số điện thoại không hợp lệ. Vui lòng nhập đủ 10 số, bắt đầu bằng 0.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang gửi...';
+
+      // Gửi qua Apps Script
+      var formData = new URLSearchParams();
+      formData.append('phone', phone);
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // tránh lỗi CORS, không đọc được response nhưng đủ để ghi dữ liệu
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formData.toString()
+      })
+        .then(function () {
+          // Dù không đọc được response, nếu không lỗi mạng thì coi như thành công
+          phoneInput.value = '';
+          showError('');
+          openModal();
+        })
+        .catch(function () {
+          showError('Có lỗi kết nối. Mẹ bầu có thể thử lại sau ít phút.');
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Đăng ký ngay';
+        });
+    });
+  </script>
+</body>
+</html>
