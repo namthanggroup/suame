@@ -396,6 +396,12 @@
   const submitBtn = document.getElementById('submitBtn');
   const successModal = document.getElementById('successModal');
   const closeModalBtn = document.getElementById('closeModalBtn');
+  // Tự focus vào ô SĐT khi trang load xong
+    window.addEventListener('load', () => {
+      if (phoneInput) {
+        phoneInput.focus();
+      }
+    });
 
   function isValidVNPhone(phone) {
     // chỉ cho 10 ký tự số và bắt đầu bằng 0
